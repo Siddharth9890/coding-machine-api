@@ -55,7 +55,7 @@ const corsOptions = {
   },
   methods: ["POST", "GET"],
 };
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json({ limit: "5mb" }));
 app.use(coreRouter);
