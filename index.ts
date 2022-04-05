@@ -52,6 +52,7 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
+  options: ["POST", "GET"],
 };
 app.use(cors(corsOptions));
 app.use(express.json({ limit: "5mb" }));
