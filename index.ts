@@ -39,7 +39,7 @@ app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
 
-app.use(cors({ origin: "https://coding-machine.pages.dev/" }));
+app.use(cors({ origin: "https://coding-machine.pages.dev/*" }));
 app.use(express.json({ limit: "5mb" }));
 app.use(coreRouter);
 
