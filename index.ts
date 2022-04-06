@@ -8,12 +8,6 @@ import mongoSanitize from "express-mongo-sanitize";
 const xss = require("xss-clean");
 import { Request, Response, NextFunction } from "express";
 import coreRouter from "./routes/core.router";
-import {
-  createProxyMiddleware,
-  Filter,
-  Options,
-  RequestHandler,
-} from "http-proxy-middleware";
 
 dotenv.config({ path: ".env" });
 
@@ -31,7 +25,10 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://coding-machine.pages.dev/"
+  );
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header(
     "Access-Control-Allow-Headers",
