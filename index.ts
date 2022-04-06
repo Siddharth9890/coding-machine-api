@@ -48,6 +48,7 @@ var corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
+  methods: ["GET", "POST"],
 };
 
 // Then pass them to cors:
