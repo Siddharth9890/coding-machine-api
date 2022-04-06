@@ -24,16 +24,29 @@ const limiter = rateLimiter({
 const PORT = process.env.PORT || 5000;
 const app = express();
 
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+var whitelist = ["https://coding-machine.pages.dev/"];
+var corsOptions = {
+  origin: function (origin: any, callback: any) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
+// Then pass them to cors:
+app.use(cors(corsOptions));
 
 const DB = process.env.DATABASE!.replace(
   "<PASSWORD>",
@@ -49,8 +62,6 @@ app.use("/submit", limiter);
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
-
-
 
 app.use(express.json({ limit: "5mb" }));
 app.use(coreRouter);
