@@ -49,9 +49,11 @@ var corsOptions = {
     }
   },
   methods: ["GET", "POST"],
+  preflightContinue: true,
 };
 
 // Then pass them to cors:
+// app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
 
 const DB = process.env.DATABASE!.replace(
