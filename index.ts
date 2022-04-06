@@ -34,7 +34,12 @@ const app = express();
 //   next();
 // });
 
-var whitelist = ["https://coding-machine.pages.dev/"];
+var whitelist = [
+  "https://coding-machine.pages.dev/",
+  "https://coding-machine.pages.dev/submit",
+  "https://coding-machine.pages.dev/check-status",
+  "https://coding-machine.pages.dev/result",
+];
 var corsOptions = {
   origin: function (origin: any, callback: any) {
     if (whitelist.indexOf(origin) !== -1) {
