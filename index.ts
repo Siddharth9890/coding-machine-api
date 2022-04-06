@@ -19,7 +19,7 @@ dotenv.config({ path: ".env" });
 
 const limiter = rateLimiter({
   max: 1,
-  windowMs: 10000,
+  windowMs: 5000,
   handler: function (req: Request, res: Response, next: NextFunction) {
     return res.status(429).json({
       error: "You sent too many requests. Please wait a while then try again",
