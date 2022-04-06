@@ -65,7 +65,7 @@ app.use(
   createProxyMiddleware({
     target: "https://coding-machine.pages.dev",
     changeOrigin: true,
-
+    ws: true,
   })
 );
 
