@@ -26,6 +26,7 @@
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^6.3.0",
     "helmet": "^5.0.2",
+    "http-proxy-middleware": "^2.0.4",
     "mongoose": "^6.2.9",
     "xss-clean": "^0.1.1"
   }

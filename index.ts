@@ -8,6 +8,12 @@ import mongoSanitize from "express-mongo-sanitize";
 const xss = require("xss-clean");
 import { Request, Response, NextFunction } from "express";
 import coreRouter from "./routes/core.router";
+import {
+  createProxyMiddleware,
+  Filter,
+  Options,
+  RequestHandler,
+} from "http-proxy-middleware";
 
 dotenv.config({ path: ".env" });
 
@@ -49,12 +55,18 @@ var corsOptions = {
     }
   },
   methods: ["GET", "POST"],
-  preflightContinue: true,
 };
 
 // Then pass them to cors:
-// app.options("*", cors(corsOptions));
-app.use(cors(corsOptions));
+// app.options("*", cors({ preflightContinue: true }));
+// app.use(cors(corsOptions));
+app.use(
+  "/",
+  createProxyMiddleware({
+    target: "https://coding-machine.pages.dev",
+    changeOrigin: true,
+  })
+);
 
 const DB = process.env.DATABASE!.replace(
   "<PASSWORD>",
