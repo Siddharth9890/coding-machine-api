@@ -30,15 +30,15 @@ const limiter = rateLimiter({
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 var whitelist = [
   "https://coding-machine.pages.dev/",
@@ -60,14 +60,6 @@ var corsOptions = {
 // Then pass them to cors:
 // app.options("*", cors({ preflightContinue: true }));
 // app.use(cors(corsOptions));
-app.use(
-  coreRouter,
-  createProxyMiddleware({
-    target: "https://coding-machine.pages.dev",
-    changeOrigin: true,
-    ws: true,
-  })
-);
 
 const DB = process.env.DATABASE!.replace(
   "<PASSWORD>",
