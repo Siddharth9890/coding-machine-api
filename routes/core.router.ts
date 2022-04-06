@@ -17,7 +17,9 @@ router.post("/submit", async (request: Request, response: Response) => {
       language: request.body.language,
       fileName: randomBytes(10).toString("hex"),
     };
+    console.log(data);
     const job = await JobModel.create(data);
+    console.log(job);
     await sendMessage(job.fileName);
     response.status(202).send(successResponse(job.fileName));
   } catch (error) {
