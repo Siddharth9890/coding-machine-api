@@ -61,10 +61,11 @@ var corsOptions = {
 // app.options("*", cors({ preflightContinue: true }));
 // app.use(cors(corsOptions));
 app.use(
-  "/",
+  coreRouter,
   createProxyMiddleware({
     target: "https://coding-machine.pages.dev",
     changeOrigin: true,
+
   })
 );
 
@@ -84,7 +85,7 @@ app.use(mongoSanitize());
 app.use(xss());
 
 app.use(express.json({ limit: "5mb" }));
-app.use(coreRouter);
+// app.use(coreRouter);
 
 app.listen(PORT, () => {
   console.log(`Server started  on port ${PORT}`);
