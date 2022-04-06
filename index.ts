@@ -40,22 +40,22 @@ app.use(function (req, res, next) {
   next();
 });
 
-var whitelist = [
-  "https://coding-machine.pages.dev/",
-  "https://coding-machine.pages.dev/submit",
-  "https://coding-machine.pages.dev/check-status",
-  "https://coding-machine.pages.dev/result",
-];
-var corsOptions = {
-  origin: function (origin: any, callback: any) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST"],
-};
+// var whitelist = [
+//   "https://coding-machine.pages.dev/",
+//   "https://coding-machine.pages.dev/submit",
+//   "https://coding-machine.pages.dev/check-status",
+//   "https://coding-machine.pages.dev/result",
+// ];
+// var corsOptions = {
+//   origin: function (origin: any, callback: any) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   methods: ["GET", "POST"],
+// };
 
 // Then pass them to cors:
 // app.options("*", cors({ preflightContinue: true }));
@@ -77,7 +77,7 @@ app.use(mongoSanitize());
 app.use(xss());
 
 app.use(express.json({ limit: "5mb" }));
-// app.use(coreRouter);
+app.use(coreRouter);
 
 app.listen(PORT, () => {
   console.log(`Server started  on port ${PORT}`);
