@@ -38,26 +38,10 @@ app.use("/submit", limiter);
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
-const whitelist = [
-  "https://coding-machine.pages.dev/",
-  "https://coding-machine.pages.dev/submit",
-  "https://coding-machine.pages.dev/check-status",
-  "https://coding-machine.pages.dev/result",
-];
-const corsOptions = {
-  origin: function (origin: any, callback: any) {
-    console.log(origin);
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["POST", "GET"],
-};
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST,DELETE");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
