@@ -3,6 +3,7 @@ import { sendMessage } from "../config/rabbitmq";
 import { errorResponse, successResponse } from "../utils";
 import { randomBytes } from "crypto";
 import JobModel from "../models/JobModel";
+import fetch from "node-fetch";
 const router = express.Router();
 
 router.post("/submit", async (request: Request, response: Response) => {
