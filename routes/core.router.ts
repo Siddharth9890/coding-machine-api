@@ -3,7 +3,6 @@ import { sendMessage } from "../config/rabbitmq";
 import { errorResponse, successResponse } from "../utils";
 import { randomBytes } from "crypto";
 import JobModel from "../models/JobModel";
-import got from "got";
 const router = express.Router();
 
 router.post("/submit", async (request: Request, response: Response) => {
@@ -18,7 +17,7 @@ router.post("/submit", async (request: Request, response: Response) => {
       language: request.body.language,
       fileName: randomBytes(10).toString("hex"),
     };
-    await got.get("https://coding-machine-worker.herokuapp.com/");
+    
     console.log(data);
     const job = await JobModel.create(data);
     await sendMessage(job.fileName);
