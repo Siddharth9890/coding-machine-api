@@ -18,7 +18,7 @@ router.post("/submit", async (request: Request, response: Response) => {
       language: request.body.language,
       fileName: randomBytes(10).toString("hex"),
     };
-    await fetch("https://coding-machine-worker.herokuapp.com/");
+
     console.log(data);
     const job = await JobModel.create(data);
     await sendMessage(job.fileName);
