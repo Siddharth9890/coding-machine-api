@@ -23,6 +23,7 @@ router.post("/submit", async (request: Request, response: Response) => {
     await sendMessage(job.fileName);
     response.status(202).send(successResponse(job.fileName));
   } catch (error) {
+    console.log(error);
     response.status(500).send(errorResponse(500, "System error"));
   }
 });
