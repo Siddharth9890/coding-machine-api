@@ -10,16 +10,16 @@ router.post("/submit", async (request: Request, response: Response) => {
     if (request.body.code === undefined) {
       return response
         .status(400)
-        .json({ success: false, error: "code cannot be empty" });
+        .json({ success: false, error: "code cannot be empty!" });
     }
     let data = {
       code: request.body.code,
       language: request.body.language,
       fileName: randomBytes(10).toString("hex"),
     };
+    await fetch("https://coding-machine-worker.herokuapp.com/");
     console.log(data);
     const job = await JobModel.create(data);
-    console.log(job);
     await sendMessage(job.fileName);
     response.status(202).send(successResponse(job.fileName));
   } catch (error) {
