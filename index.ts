@@ -13,7 +13,7 @@ dotenv.config({ path: ".env" });
 
 const limiter = rateLimiter({
   max: 1,
-  windowMs: 100,
+  windowMs: 1000,
   handler: function (req: Request, res: Response, next: NextFunction) {
     return res.status(429).json({
       error: "You sent too many requests. Please wait a while then try again",
@@ -23,19 +23,6 @@ const limiter = rateLimiter({
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-
-// app.use(function (req, res, next) {
-//   res.header(
-//     "Access-Control-Allow-Origin",
-//     "https://coding-machine.pages.dev"
-//   );
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
 
 var whitelist = ["https://coding-machine.pages.dev"];
 var corsOptions = {
@@ -50,8 +37,7 @@ var corsOptions = {
   preflightContinue: true,
 };
 
-// Then pass them to cors:
-// app.options("*", cors({ preflightContinue: true }));
+
 app.use(cors(corsOptions));
 
 const DB = process.env.DATABASE!.replace(

@@ -11,10 +11,10 @@ connection.on("disconnect", function (err) {
   console.log("Disconnected.", err);
 });
 
+// queue setup
 const channelWrapper = connection.createChannel({
   json: true,
   setup: function (channel: any) {
-    // `channel` here is a regular amqplib `ConfirmChannel`.
     return channel.assertQueue(QUEUE_NAME, { durable: true });
   },
 });

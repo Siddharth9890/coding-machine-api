@@ -1,7 +1,7 @@
+import { randomBytes } from "crypto";
 import express, { Request, Response } from "express";
 import { sendMessage } from "../config/rabbitmq";
 import { errorResponse, successResponse } from "../utils";
-import { randomBytes } from "crypto";
 import JobModel from "../models/JobModel";
 const router = express.Router();
 
@@ -17,13 +17,11 @@ router.post("/submit", async (request: Request, response: Response) => {
       language: request.body.language,
       fileName: randomBytes(10).toString("hex"),
     };
-    
-    console.log(data);
+
     const job = await JobModel.create(data);
     await sendMessage(job.fileName);
     response.status(202).send(successResponse(job.fileName));
   } catch (error) {
-    console.log(error);
     response.status(500).send(errorResponse(500, "System error"));
   }
 });
