@@ -38,10 +38,6 @@ const DB = process.env.DATABASE!.replace(
   process.env.DATABASE_PASSWORD!
 );
 
-mongoose
-  .connect(DB)
-  .then(() => console.log("connected to db"))
-  .catch((error) => console.log(error));
 
 app.use("/submit", limiter);
 app.use(helmet());
@@ -51,9 +47,16 @@ app.use(xss());
 app.use(express.json({ limit: "5mb" }));
 app.use(coreRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server started  on port ${PORT}`);
-});
+mongoose
+  .connect(DB)
+  .then(() => {
+    console.log("connected to db");
+    app.listen(PORT, async () => {
+      console.log(`Server started  on port ${PORT}`);
+    });
+  })
+  .catch((error) => console.log(error));
+
 
 process.on("unhandledRejection", (error) => {
   console.log(error);
