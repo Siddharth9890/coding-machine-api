@@ -24,21 +24,14 @@ const limiter = rateLimiter({
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-var whitelist = ["https://coding-machine.pages.dev"];
-var corsOptions = {
-  origin: function (origin: any, callback: any) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST"],
-  preflightContinue: true,
-};
-
-
-app.use(cors(corsOptions));
+app.use(
+ cors({
+    origin: [
+      "https://coding-machine.pages.dev",
+    ],
+    credentials: true,
+  })
+);
 
 const DB = process.env.DATABASE!.replace(
   "<PASSWORD>",
