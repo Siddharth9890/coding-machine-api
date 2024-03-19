@@ -1,6 +1,6 @@
 export const errorResponse = (code: number, message: string) => {
   return {
-    status: "error",
+    status: false,
     data: null,
     error: {
       code: code,
@@ -11,7 +11,13 @@ export const errorResponse = (code: number, message: string) => {
 
 export const successResponse = (data: string) => {
   return {
-    status: "ok",
+    status: true,
     data: data,
   };
+};
+
+export const generateRandomNumber = () => {
+  let randomNumber = Math.floor(Math.random() * 1000000000);
+
+  return randomNumber;
 };
