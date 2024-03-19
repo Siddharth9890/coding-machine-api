@@ -3,7 +3,7 @@ import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
 const sqsClient = new SQSClient({ region: process.env.AWS_SQS_REGION });
 
 export const sendMessage = async (
-  messageBody: string,
+  messageBody: number,
   submissionId: number
 ) => {
   try {

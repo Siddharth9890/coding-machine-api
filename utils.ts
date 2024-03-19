@@ -12,7 +12,7 @@ export const errorResponse = (code: number, message: string) => {
   };
 };
 
-export const successResponse = (data: string) => {
+export const successResponse = (data: any) => {
   return {
     status: true,
     data: data,

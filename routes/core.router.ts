@@ -6,10 +6,18 @@ const router = express.Router();
 
 router.post("/submit", async (request: Request, response: Response) => {
   try {
-    if (request.body.code === undefined) {
+    if (
+      request.body.code === undefined ||
+      typeof request.body.code != "string"
+    ) {
       return response
         .status(400)
-        .json({ success: false, error: "code cannot be empty!" });
+        .send(
+          errorResponse(
+            400,
+            "Code cannot be empty!.It should be of type string only"
+          )
+        );
     }
     let data = {
       code: request.body.code,
@@ -19,7 +27,7 @@ router.post("/submit", async (request: Request, response: Response) => {
 
     const job = await JobModel.create(data);
     await sendMessage(job.submissionId, data.submissionId);
-    response.status(201).send(successResponse(job.submissionId));
+    response.status(201).send(successResponse(job.submissionId.toString()));
   } catch (error) {
     console.log(error);
     response.status(500).send(errorResponse(500, "Something went wrong"));
@@ -29,19 +37,23 @@ router.post("/submit", async (request: Request, response: Response) => {
 router.get("/check-status", async (request: Request, response: Response) => {
   try {
     let { submissionId } = request.query;
-    if (submissionId === undefined) {
-      return response
-        .status(400)
-        .json({ success: false, error: "missing submissionId" });
+    if (submissionId === undefined || typeof submissionId != "string") {
+      return response.status(400).json({
+        success: false,
+        error: "Missing submissionId. It should be of type string only",
+      });
     }
-    const job = await JobModel.findOne({ submissionId });
-    if (job.status === "queued") {
-      response.status(200).send({ status: "Queued" });
-    } else if (job.status === "processing") {
-      response.status(200).send({ status: "Processing" });
-    } else {
-      response.status(200).send(successResponse(job.status));
+    const job = await JobModel.findOne({ submissionId: { $eq: submissionId } });
+    if (job !== null) {
+      if (job.status === "queued") {
+        response.status(200).send({ status: "Queued" });
+      } else if (job.status === "processing") {
+        response.status(200).send({ status: "Processing" });
+      } else {
+        response.status(200).send(successResponse(job.status));
+      }
     }
+    response.status(200).send({ status: "Not Found!" });
   } catch (error) {
     console.log(error);
     response
@@ -53,12 +65,13 @@ router.get("/check-status", async (request: Request, response: Response) => {
 router.get("/result", async (request: Request, response: Response) => {
   try {
     let { submissionId } = request.query;
-    if (submissionId === undefined) {
-      return response
-        .status(400)
-        .json({ success: false, error: "missing submissionId" });
+    if (submissionId === undefined || typeof submissionId != "string") {
+      return response.status(400).json({
+        success: false,
+        error: "Missing submissionId. It should be of type string only",
+      });
     }
-    const job = await JobModel.findOne({ submissionId });
+    const job = await JobModel.findOne({ submissionId: { $eq: submissionId } });
 
     response.status(200).send(successResponse(job));
   } catch (error) {
