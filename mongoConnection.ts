@@ -10,8 +10,6 @@ export const mongoConnection = (app: Express) => {
     .then(() => {
       console.log("connected to db");
       app.listen(PORT, async () => {
-        // to restore data from file important as indexes will be rebuild by mongoose
-        // await restoreMain();
         console.log(`Server started  on port ${PORT}`);
       });
     })

@@ -1,12 +1,12 @@
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 const xss = require("xss-clean");
 import coreRouter from "./routes/core.router";
 import { mongoConnection } from "./mongoConnection";
+import { apiLimiter } from "./utils";
 
 dotenv.config({ path: ".env" });
 
@@ -19,6 +19,7 @@ app.use(
   })
 );
 
+app.use("/*", apiLimiter);
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
