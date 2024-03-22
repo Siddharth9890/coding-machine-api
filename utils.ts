@@ -28,7 +28,7 @@ export const generateRandomNumber = () => {
 // this thing will not work as we are using lambdas but github scanning recommends to add it!
 // also we have rate limiting configured on API GATEWAY side
 export const apiLimiter = rateLimiter({
-  max: 1,
+  max: 3,
   windowMs: 100,
   handler: function (req: Request, res: Response, next: NextFunction) {
     return res.status(429).json({
