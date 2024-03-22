@@ -27,10 +27,10 @@ router.post("/submit", async (request: Request, response: Response) => {
 
     const job = await JobModel.create(data);
     await sendMessage(job.submissionId, data.submissionId);
-    response.status(201).send(successResponse(job.submissionId.toString()));
+    return response.status(201).send(successResponse(job.submissionId.toString()));
   } catch (error) {
     console.log(error);
-    response.status(500).send(errorResponse(500, "Something went wrong"));
+    return response.status(500).send(errorResponse(500, "Something went wrong"));
   }
 });
 
@@ -46,17 +46,17 @@ router.get("/check-status", async (request: Request, response: Response) => {
     const job = await JobModel.findOne({ submissionId: { $eq: submissionId } });
     if (job !== null) {
       if (job.status === "queued") {
-        response.status(200).send({ status: "Queued" });
+        return response.status(200).send({ status: "Queued" });
       } else if (job.status === "processing") {
-        response.status(200).send({ status: "Processing" });
+        return response.status(200).send({ status: "Processing" });
       } else {
-        response.status(200).send(successResponse(job.status));
+        return response.status(200).send(successResponse(job.status));
       }
     }
-    response.status(200).send({ status: "Not Found!" });
+    return response.status(200).send({ status: "Not Found!" });
   } catch (error) {
     console.log(error);
-    response
+    return response
       .status(500)
       .json({ success: false, status: "Something went wrong" });
   }
@@ -73,10 +73,10 @@ router.get("/result", async (request: Request, response: Response) => {
     }
     const job = await JobModel.findOne({ submissionId: { $eq: submissionId } });
 
-    response.status(200).send(successResponse(job));
+    return response.status(200).send(successResponse(job));
   } catch (error) {
     console.log(error);
-    response
+    return response
       .status(500)
       .json({ success: false, status: "Something went wrong" });
   }

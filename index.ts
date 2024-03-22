@@ -12,9 +12,18 @@ dotenv.config({ path: ".env" });
 
 export const app = express();
 
+const whitelistedDomains = [
+  "https://coding-machine.pages.dev",
+  "https://coding-machine.siddharth9890.com",
+];
+
+if (process.env.NODE !== "production") {
+  whitelistedDomains.push("http://localhost:3000");
+}
+
 app.use(
   cors({
-    origin: ["https://coding-machine.pages.dev"],
+    origin: whitelistedDomains,
     credentials: true,
   })
 );
