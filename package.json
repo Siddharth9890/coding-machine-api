@@ -8,9 +8,7 @@
     "dev": "ts-node-dev --respawn  index.ts ",
     "start": "node dist/index.js",
     "build": "npx tsc",
-    "deploy:prod": "rm -rf /dist && npm run build && serverless deploy",
-    "deploy:staging": "rm -rf /dist && npm run build && serverless deploy --stage stag",
-    "deploy:all": "npm run deploy:prod && npm run deploy:staging"
+    "deploy:prod": "rm -rf /dist && npm run build && serverless deploy"
   },
   "keywords": [],
   "author": "siddharth.a9890@gmail.com",

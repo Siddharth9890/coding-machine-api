@@ -35,4 +35,5 @@ export const apiLimiter = rateLimiter({
       error: "You sent too many requests. Please wait a while then try again",
     });
   },
+  validate: { ip: false },
 });
